@@ -1,0 +1,18 @@
+syntax = "proto3";
+package pvz.v1;
+option go_package = "pvz-backend-service/api/pvz/v1";
+
+import "google/protobuf/empty.proto";
+
+service PVZService {
+  rpc GetPVZList(google.protobuf.Empty) returns (GetPVZListResponse);
+}
+
+message PVZ {
+  string id = 1;
+  string city = 2;
+}
+
+message GetPVZListResponse {
+  repeated PVZ pvz = 1;
+}
