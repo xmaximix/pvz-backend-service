@@ -17,18 +17,18 @@
     1. docker compose up --build -d
 
     2. Проверка работы сервиса
+    
     Получите тестовый JWT-токен для роли модератора:
+    TOKEN=$(curl -s -X POST http://localhost:8080/dummyLogin \
+        -H 'Content-Type: application/json' \
+        -d '{"role":"moderator"}' | jq -r '.token')
 
-    curl -X POST http://localhost:8080/dummyLogin \
-    -H 'Content-Type: application/json' \
-    -d '{"role":"moderator"}'
-
-    Скопируйте полученный токен и создайте новый ПВЗ (например, в Казани):
+    Создаем новый ПВЗ (например, в Казани), подставив токен автоматически:
     curl -X POST http://localhost:8080/pvz \
-    -H 'Authorization: Bearer ВАШ_ТОКЕН' \
-    -H 'Content-Type: application/json' \
-    -d '{"city":"Казань"}'
-
+        -H "Authorization: Bearer $TOKEN" \
+        -H 'Content-Type: application/json' \
+        -d '{"city":"Казань"}'
+      
     3. Проверка метрик
 
     # 1) Количество созданных ПВЗ
